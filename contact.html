@@ -2,42 +2,91 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>인터넷활용 실습 템플릿</title>
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>허연욱 포트폴리오 | Contact</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-<header>
-  <h1>허연욱</h1>
-  <p class="subtitle">광운대학교 정보융합학부 4학년</p>
-</header>
-<nav>
-  <a href="index.html">Home</a>
-  <a href="about.html">About</a>
-  <a href="portfolio.html">Portfolio</a>
-  <a href="contact.html">Contact</a>
-</nav>
-<main class="container">
-<section>
-  <h2>Contact</h2>
-  <ul>
-    <li>이메일: bio9909@gmail.com</li>
-    <li>GitHub: https://github.com/SanPig1</li>
-    <li>기타 링크(블로그/노션 등): </li>
-  </ul>
-  <!-- 아래는 정말 기본 예시 폼입니다. JS 없이도 동작하지 않아도 되며, 형태만 제공합니다. -->
-  <form class="contact-form" onsubmit="return false;">
-    <label>이름</label>
-    <input type="text" placeholder="이름을 입력하세요">
-    <label>메시지</label>
-    <textarea rows="4" placeholder="메시지를 입력하세요"></textarea>
-    <button type="submit">보내기 (동작X, 형태만)</button>
-  </form>
-</section>
-</main>
-<footer>
-  <small>&copy; <span id="year"></span> 허연욱</small>
-</footer>
-<script src="script.js"></script>
+  <!-- header: 사이트 공통 상단 영역입니다. -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="index.html" aria-label="홈으로 이동">
+        <span class="brand-mark">HY</span>
+        <span class="brand-text">Yeonwook Portfolio</span>
+      </a>
+      <nav class="gnb" aria-label="주요 메뉴">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="portfolio.html">Portfolio</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- section: 연락 페이지의 상단 소개 영역입니다. -->
+    <section class="page-hero section-padding">
+      <div class="container">
+        <p class="eyebrow">Contact</p>
+        <h1>함께 이야기할 준비가 됐습니다.</h1>
+        <p>프로젝트, 과제, 협업 관련 연락 정보를 정리한 페이지입니다.</p>
+      </div>
+    </section>
+
+    <!-- section: 연락처와 폼을 2단 카드 구조로 배치했습니다. -->
+    <section class="section-padding white-section">
+      <div class="container contact-grid">
+        <article class="contact-info-card">
+          <p class="eyebrow">Contact Point</p>
+          <h2>연락 정보</h2>
+          <p>아래 채널을 통해 연락할 수 있습니다.</p>
+
+          <ul class="contact-list">
+            <li>
+              <span>Email</span>
+              <a href="mailto:bio9909@gmail.com">bio9909@gmail.com</a>
+            </li>
+            <li>
+              <span>GitHub</span>
+              <a href="https://github.com/SanPig1" target="_blank" rel="noopener">github.com/SanPig1</a>
+            </li>
+            <li>
+              <span>Location</span>
+              <strong>Seoul · Gyeonggi, Korea</strong>
+            </li>
+          </ul>
+        </article>
+
+        <article class="form-card">
+          <h2>메시지 작성</h2>
+          <p>아래 폼은 학습용 예시이며, JavaScript로 간단한 입력 확인만 진행합니다.</p>
+
+          <!-- form: 사용자가 메시지를 입력하는 영역입니다. 실제 전송 기능은 없습니다. -->
+          <form class="contact-form" id="contactForm">
+            <label for="name">이름</label>
+            <input type="text" id="name" placeholder="이름을 입력하세요" />
+
+            <label for="email">이메일</label>
+            <input type="email" id="email" placeholder="이메일을 입력하세요" />
+
+            <label for="message">메시지</label>
+            <textarea id="message" rows="5" placeholder="메시지를 입력하세요"></textarea>
+
+            <button type="submit">메시지 확인</button>
+          </form>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <!-- footer: 사이트 하단 정보입니다. -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <small>&copy; <span id="year"></span> 허연욱. All Rights Reserved.</small>
+      <small>Designed for Internet Application Class</small>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
