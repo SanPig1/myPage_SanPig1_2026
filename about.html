@@ -2,41 +2,131 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>인터넷활용 실습 템플릿</title>
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>허연욱 포트폴리오 | About</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-<header>
-  <h1>허연욱</h1>
-  <p class="subtitle">광운대학교 정보융합학부 4학년</p>
-</header>
-<nav>
-  <a href="index.html">Home</a>
-  <a href="about.html">About</a>
-  <a href="portfolio.html">Portfolio</a>
-  <a href="contact.html">Contact</a>
-</nav>
-<main class="container">
-<section>
-  <h2>About Me</h2>
-  <p>안녕하세요! 광운대학교 정보융합학부 4학년 재학중인 허연욱입니다.</p>
-  <h3>학력</h3>
-  <ul>
-    <li>광운대학교 정보융합학부 4학년 재학중</li>
-    <li>(여기에 추가)</li>
-  </ul>
-  <h3>관심 분야</h3>
-  <ul>
-    <li>UX/UI</li>
-    <li>데이터 시각화</li>
-    <li>QA업무</li>
-  </ul>
-</section>
-</main>
-<footer>
-  <small>&copy; <span id="year"></span> 허연욱</small>
-</footer>
-<script src="script.js"></script>
+  <!-- header: 사이트 공통 상단 영역입니다. -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="index.html" aria-label="홈으로 이동">
+        <span class="brand-mark">HY</span>
+        <span class="brand-text">Yeonwook Portfolio</span>
+      </a>
+      <nav class="gnb" aria-label="주요 메뉴">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="portfolio.html">Portfolio</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- section: 서브페이지의 제목 영역입니다. -->
+    <section class="page-hero section-padding">
+      <div class="container">
+        <p class="eyebrow">About Me</p>
+        <h1>고민하고, 분석하고, 구현하는 사람</h1>
+        <p>
+          전공 수업과 프로젝트를 통해 쌓은 경험을 바탕으로<br>
+          사용자 중심의 디지털 결과물을 만들어가고 있습니다.
+        </p>
+      </div>
+    </section>
+
+    <!-- section: 자기소개와 기본 정보를 2단 구조로 배치했습니다. -->
+    <section class="section-padding white-section">
+      <div class="container two-column">
+        <article>
+          <p class="eyebrow">Introduction</p>
+          <h2>안녕하세요, 허연욱입니다.</h2>
+          <p>
+            광운대학교 정보융합학부 4학년에 재학 중이며, UX/UI와 데이터 시각화,
+            그리고 웹페이지 디자인에 관심을 가지고 있습니다. 단순히 결과물을 만드는 것보다
+            문제를 이해하고, 정보를 구조화하고, 사용자가 쓰기 쉽게 개선하는 과정에 흥미를 느낍니다.
+          </p>
+          <p>
+            수업 프로젝트를 통해 HTML, CSS, JavaScript 기반의 웹페이지 제작을 경험했으며,<br>
+            데이터 분석 결과를 시각적으로 표현하는 작업에도 꾸준히 관심을 확장하고 있습니다.
+          </p>
+        </article>
+
+        <aside class="profile-card">
+          <h3>Profile</h3>
+          <ul class="clean-list">
+            <li><span>이름</span><strong>허연욱</strong></li>
+            <li><span>소속</span><strong>광운대학교 정보융합학부</strong></li>
+            <li><span>학년</span><strong>4학년</strong></li>
+            <li><span>관심 분야</span><strong>UX/UI, 데이터 시각화, QA</strong></li>
+          </ul>
+        </aside>
+      </div>
+    </section>
+
+    <!-- section: 기업의 비전/가치 소개처럼 개인의 태도를 정리한 영역입니다. -->
+    <section class="section-padding">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">Working Values</p>
+          <h2>보다 중요하게 생각하는 것</h2>
+        </div>
+
+        <div class="card-grid three">
+          <article class="info-card">
+            <h3>문제 이해</h3>
+            <p>작업을 시작하기 전에 사용자의 목적과 문제 상황을 먼저 정리합니다.</p>
+          </article>
+          <article class="info-card">
+            <h3>명확한 구조</h3>
+            <p>정보를 보기 쉽게 나누고, 흐름이 자연스럽게 이어지는 화면을 지향합니다.</p>
+          </article>
+          <article class="info-card">
+            <h3>꾸준한 개선</h3>
+            <p>피드백을 반영해 결과물을 다듬고 더 나은 방향으로 수정하는 과정을 중요하게 생각합니다.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- section: 학습 흐름을 타임라인으로 표현했습니다. -->
+    <section class="section-padding white-section">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">Learning Roadmap</p>
+          <h2>학습 및 성장 방향</h2>
+        </div>
+
+        <div class="timeline">
+          <div class="timeline-item">
+            <span>Step 1</span>
+            <h3>기초 웹 구현</h3>
+            <p>HTML, CSS, JavaScript를 활용해 웹페이지의 기본 구조와 스타일을 구현합니다.</p>
+          </div>
+          <div class="timeline-item">
+            <span>Step 2</span>
+            <h3>사용자 경험 이해</h3>
+            <p>UX/UI 관점에서 사용자가 이해하기 쉬운 화면 구성과 정보 배치를 고민합니다.</p>
+          </div>
+          <div class="timeline-item">
+            <span>Step 3</span>
+            <h3>데이터 기반 표현</h3>
+            <p>데이터 분석 결과를 시각화하여 설득력 있게 전달하는 방법을 학습합니다.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- footer: 사이트 하단 정보입니다. -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <small>&copy; <span id="year"></span> 허연욱. All Rights Reserved.</small>
+      <small>Designed for Internet Application Class</small>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
