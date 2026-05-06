@@ -2,35 +2,133 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>인터넷활용 실습 템플릿</title>
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>허연욱 포트폴리오 | Home</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-<header>
-  <h1>허연욱</h1>
-  <p class="subtitle">광운대학교 정보융합학부 4학년</p>
-</header>
-<nav>
-  <a href="index.html">Home</a>
-  <a href="about.html">About</a>
-  <a href="portfolio.html">Portfolio</a>
-  <a href="contact.html">Contact</a>
-</nav>
-<main class="container">
-<section>
-  <h2>홈</h2>
-  <p>안녕하세요! 저는 <strong>허연욱</strong> 입니다.</p>
-  <ul>
-    <li>학과/학번: 정보융합학부 2018204067</li>
-    <li>관심 분야: UX/UI, 데이터분석</li>
-    <li>기술 스택(예: HTML, CSS, JS): C, Python, JAVA, HTML, CSS, JS</li>
-  </ul>
-</section>
-</main>
-<footer>
-  <small>&copy; <span id="year"></span> 허연욱</small>
-</footer>
-<script src="script.js"></script>
+  <!-- header: 사이트의 상단 브랜드 영역입니다. 모든 페이지에서 같은 구조로 사용합니다. -->
+  <header class="site-header">
+    <div class="header-inner">
+      <!-- 로고 영역: 이름을 하나의 브랜드처럼 보여줍니다. -->
+      <a class="brand" href="index.html" aria-label="홈으로 이동">
+        <span class="brand-mark">HY</span>
+        <span class="brand-text">Yeonwook Portfolio</span>
+      </a>
+
+      <!-- nav: 페이지 이동 메뉴입니다. -->
+      <nav class="gnb" aria-label="주요 메뉴">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="portfolio.html">Portfolio</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- section: 첫 화면에서 가장 먼저 보이는 기업 소개형 히어로 영역입니다. -->
+    <section class="hero section-padding">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">UX/UI · Data Visualization · Web Publishing</p>
+          <h1>데이터와 디자인을 연결하는<br />허연욱 입니다.</h1>
+          <p class="hero-desc">
+            광운대학교 정보융합학부 허연욱의 학업, 프로젝트, 관심 분야를
+            소개하는 포트폴리오 홈페이지입니다.
+          </p>
+          <div class="button-group">
+            <a class="btn primary" href="portfolio.html">프로젝트 보기</a>
+            <a class="btn secondary" href="about.html">소개 읽기</a>
+          </div>
+        </div>
+
+        <!-- 오른쪽 카드: 기업 홈페이지의 핵심 메시지 카드처럼 구성했습니다. -->
+        <div class="hero-card">
+          <span class="card-label">Portfolio Summary</span>
+          <h2>Problem Solving<br />with Design Thinking</h2>
+          <p>
+            사용자의 문제를 발견하고, 데이터를 해석하며,
+            보기 쉬운 결과물로 만드는 과정을 중요하게 생각합니다.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- section: 숫자와 키워드로 한눈에 보여주는 요약 영역입니다. -->
+    <section class="section-padding white-section">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">Profile Snapshot</p>
+          <h2>한눈에 보는 프로필</h2>
+          <!--<p>개인 정보를 길게 나열하기보다, 기업 소개 페이지의 지표 카드처럼 정리했습니다.</p>-->
+        </div>
+
+        <div class="stats-grid">
+          <article class="stat-card">
+            <strong>4th</strong>
+            <span>광운대학교 정보융합학부 4학년</span>
+          </article>
+          <article class="stat-card">
+            <strong>3+</strong>
+            <span>UX/UI, 데이터 시각화, QA 관심 분야</span>
+          </article>
+          <article class="stat-card">
+            <strong>6</strong>
+            <span>C, Python, Java, HTML, CSS, JS 활용</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- section: 핵심 역량을 카드형 레이아웃으로 보여줍니다. -->
+    <section class="section-padding">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">Core Strength</p>
+          <h2>집중하는 역량</h2>
+        </div>
+
+        <div class="card-grid three">
+          <article class="info-card">
+            <div class="icon-box">01</div>
+            <h3>UX/UI 기획</h3>
+            <p>사용자가 편하게 이해하고 사용할 수 있는 경험을 고민합니다.</p>
+          </article>
+          <article class="info-card">
+            <div class="icon-box">02</div>
+            <h3>데이터 시각화</h3>
+            <p>복잡한 데이터를 그래프와 대시보드로 명확하게 전달하는 데 관심이 있습니다.</p>
+          </article>
+          <article class="info-card">
+            <div class="icon-box">03</div>
+            <h3>웹 구현</h3>
+            <p>HTML, CSS, JavaScript를 활용해 정적인 웹페이지를 직접 구현할 수 있습니다.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- section: 다음 행동을 유도하는 CTA 영역입니다. -->
+    <section class="cta-section">
+      <div class="container cta-box">
+        <div>
+          <p class="eyebrow">Next</p>
+          <h2>프로젝트 경험을 더 자세히 확인해보세요.</h2>
+        </div>
+        <a class="btn primary" href="portfolio.html">Portfolio 이동</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- footer: 사이트 하단 정보입니다. -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <small>&copy; <span id="year"></span> 허연욱. All Rights Reserved.</small>
+      <small>Designed for Internet Application Class</small>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
