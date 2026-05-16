@@ -1,6 +1,7 @@
 # myPage_SanPig1_2026
 
 2026년 1학기 인터넷활용수업 - 나만의 홈페이지 만들기
+https://sanpig1.github.io/myPage_SanPig1_2026/
 
 ## 수정 내용
 
