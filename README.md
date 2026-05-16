@@ -14,3 +14,9 @@
   - 현재 페이지 메뉴 강조
   - 카드 등장 애니메이션
   - Contact 폼 입력 확인
+
+## 5/16 수정 내용
+
+- dday.html, random.html 페이지 추가
+- 기존 basic templete의 css, js 추가
+- 실습페이지 연결을 위한 portfolio.html 페이지 수정

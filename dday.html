@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>D-Day 계산기 - 인터넷활용 실습</title>
+  <link rel="stylesheet" href="basic_style.css">
+</head>
+<body>
+<header>
+  <h1>실습 1: D-Day 계산기</h1>
+  <p class="subtitle">입력받은 날짜를 목표 날짜로 설정하고, 오늘을 기준으로 남은 D-Day를 계산합니다.</p>
+</header>
+<nav>
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="portfolio.html">Portfolio</a>
+  <a href="contact.html">Contact</a>
+</nav>
+<main class="container">
+<section>
+  <style>
+    .dday-wrapper {
+      max-width: 480px;
+      margin: 2rem auto;
+      padding: 2.5rem 2rem;
+      background: #ffffff;
+      border-radius: 24px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      text-align: center;
+      box-sizing: border-box;
+    }
+
+    .dday-wrapper h2 {
+      color: #1e293b;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-top: 0;
+      margin-bottom: 2rem;
+      letter-spacing: -0.5px;
+    }
+
+    .dday-card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 18px;
+      padding: 2rem 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .dday-title {
+      font-size: 0.85rem;
+      color: #64748b;
+      margin: 0 0 6px 0;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .dday-target {
+      font-size: 1.1rem;
+      color: #334155;
+      font-weight: 600;
+      margin: 0 0 1.5rem 0;
+    }
+
+    .dday-counter {
+      font-size: 3.5rem;
+      font-weight: 800;
+      margin: 1rem 0;
+      line-height: 1;
+      letter-spacing: -1px;
+    }
+
+    /* 상태별 디데이 색상 및 효과 */
+    .color-future {
+      color: #4f46e5; /* 세련된 인디고 블루 */
+      animation: pulse 2s infinite;
+    }
+
+    .color-zero {
+      color: #ef4444; /* 강조용 레드 */
+    }
+
+    .color-past {
+      color: #64748b; /* 차분한 그레이 */
+    }
+
+    .dday-info-text {
+      font-size: 1.05rem;
+      color: #475569;
+      margin: 1.5rem 0 0 0;
+    }
+
+    .dday-info-text strong {
+      color: #0f172a;
+      font-weight: 700;
+    }
+
+    .dday-footer {
+      border-top: 1px dashed #e2e8f0;
+      padding-top: 1.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .dday-today-text {
+      font-size: 0.875rem;
+      color: #64748b;
+      margin: 0 0 6px 0;
+    }
+
+    .dday-refresh-text {
+      font-size: 0.75rem;
+      color: #94a3b8;
+      margin: 0;
+    }
+
+    .dday-canceled {
+      padding: 3rem 1rem;
+      color: #94a3b8;
+      font-size: 1.1rem;
+      font-weight: 500;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.03); }
+    }
+  </style>
+
+  <div class="dday-wrapper">
+    <h2>Date 객체 활용: D-Day 계산기</h2>
+    
+    <script>
+      // 1. 오늘 날짜 객체 생성
+      let now = new Date(); 
+
+      // 2. prompt()로 사용자에게 연, 월, 일 입력받기
+      let year = prompt("목표 연도를 입력하세요 (예: 2025)", "2025");
+      let month = prompt("목표 월을 입력하세요 (1~12)", "12");
+      let day = prompt("목표 일을 입력하세요 (1~31)", "25");
+
+      // 사용자가 '취소'를 누르거나 값을 입력하지 않은 경우
+      if (!year || !month || !day) {
+        document.write("<div class='dday-canceled'><h3>❌ D-Day 계산을 취소했습니다.</h3><p style='font-size:0.85rem; margin-top:8px;'>새로고침(F5)을 하면 다시 입력할 수 있습니다.</p></div>");
+      } else {
+        // 3. 입력받은 값으로 목표 날짜 객체 생성
+        let targetDate = new Date(year, month - 1, day); 
+
+        // 4. 날짜 차이 계산 (밀리초 단위)
+        let diffMs = targetDate.getTime() - now.getTime();
+
+        // 5. 밀리초(ms)를 일(day) 단위로 변환
+        let diffDay = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+
+        // HTML 출력을 깔끔하게 감싸서 구성
+        let resultHtml = "<div class='dday-card'>";
+        resultHtml += "  <p class='dday-title'>🎯 목표 날짜</p>";
+        resultHtml += "  <p class='dday-target'>" + targetDate.toLocaleString() + "</p>";
+
+        if (diffDay === 0) {
+          resultHtml += "  <div class='dday-counter color-zero'>D-Day 🎉</div>";
+          resultHtml += "  <p class='dday-info-text'><strong>오늘</strong>이 바로 목표하신 날입니다!</p>";
+        } else if (diffDay > 0) {
+          resultHtml += "  <div class='dday-counter color-future'>D-" + diffDay + "</div>";
+          resultHtml += "  <p class='dday-info-text'>목표일까지 <strong>" + diffDay + "일</strong> 남았습니다.</p>";
+        } else {
+          resultHtml += "  <div class='dday-counter color-past'>D+" + Math.abs(diffDay) + "</div>";
+          resultHtml += "  <p class='dday-info-text'>목표일로부터 <strong>" + Math.abs(diffDay) + "일</strong> 지났습니다.</p>";
+        }
+        resultHtml += "</div>";
+
+        resultHtml += "<div class='dday-footer'>";
+        resultHtml += "  <p class='dday-today-text'>📅 오늘 날짜: " + now.toLocaleString() + "</p>";
+        resultHtml += "  <p class='dday-refresh-text'><i>새로고침(F5)을 눌러 다시 계산할 수 있습니다.</i></p>";
+        resultHtml += "</div>";
+
+        // 6. 결과 출력
+        document.write(resultHtml);
+      }
+    </script>
+  </div>
+</section>
+</main>
+<footer>
+  <small>&copy; <span id="year"></span> 허연욱</small>
+</footer>
+<script src="basic_script.js"></script>
+</body>
+</html>
