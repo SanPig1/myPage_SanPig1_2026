@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>실습 2: 댓글 추가/삭제</title>
+    <link rel="stylesheet" href="basic_style.css">
+    <style>
+        /* 페이지 전용 추가 스타일 */
+        ul#commentList {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 1.5rem;
+        }
+        ul#commentList li {
+            background-color: #f8f9fa;
+            margin: 0.75rem 0;
+            padding: 1rem;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        ul#commentList li:hover {
+            background-color: #fff5f5;
+            border-color: #ffe3e3;
+        }
+        /* 마우스 오버 시 삭제 안내 가이드 */
+        ul#commentList li:hover::after {
+            content: "클릭하여 삭제";
+            color: #e03131;
+            font-size: 0.85rem;
+            font-weight: bold;
+            background: #ffe3e3;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+        }
+        .time-span {
+            color: #868e96;
+            font-size: 0.85rem;
+            margin-left: auto;
+            margin-right: 1rem;
+        }
+        /* 호버 시에는 시간 대신 삭제 메시지가 깔끔하게 보이도록 숨김 처리 */
+        ul#commentList li:hover .time-span {
+            display: none;
+        }
+        .comment-form-box {
+            margin-bottom: 1.5rem;
+        }
+    </style>
+    <script>
+        // 댓글 추가 함수 (입력창 방식으로 변경)
+        function addComment() {
+            // 1. 사용자 입력 받기 (textarea 요소에서 값 가져오기)
+            var textarea = document.getElementById("commentInput");
+            var inputStr = textarea.value;
+
+            // 내용이 비어있으면 알림 후 종료
+            if (inputStr == null || inputStr.trim() == "") {
+                alert("댓글 내용을 입력해주세요!");
+                textarea.focus();
+                return; 
+            }
+
+            // 2. 부모 요소(ul) 찾기
+            var parent = document.getElementById("commentList");
+
+            // 3. 새로운 요소(li) 생성 및 내용 채우기
+            var newLi = document.createElement("li");
+            
+            // 댓글 텍스트 영역 생성
+            var textSpan = document.createElement("span");
+            textSpan.textContent = inputStr;
+            newLi.appendChild(textSpan);
+
+            // 4. 현재 시간 표시 기능 추가 (기능 C)
+            var timeSpan = document.createElement("span");
+            timeSpan.className = "time-span";
+            timeSpan.textContent = new Date().toLocaleString('ko-KR');
+            newLi.appendChild(timeSpan);
+
+            // 5. 클릭 시 삭제되는 이벤트 리스너 등록
+            newLi.onclick = function() {
+                var p = this.parentElement; 
+                p.removeChild(this);        
+            };
+
+            // 6. 트리에 추가 (Append)
+            parent.appendChild(newLi);
+
+            // 등록 후 입력창 초기화 및 포커스 이동
+            textarea.value = "";
+            textarea.focus();
+        }
+    </script>
+</head>
+<body>
+
+    <header>
+        <h1>DOM 제어 실습실</h1>
+        <div class="subtitle">JavaScript로 웹 페이지를 동적으로 제어하기</div>
+    </header>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="portfolio.html">Portfolio</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+
+    <div class="container">
+        <section>
+            <h2>실습 2: 댓글 추가/삭제 프로그램</h2>
+            <p>아래 입력창에 의견을 남겨보세요. 리스트에 등록된 댓글을 클릭하면 목록에서 삭제됩니다.</p>
+            <hr style="border: 0; height: 1px; background: #eee; margin: 1rem 0;">
+
+            <div class="comment-form-box">
+                <textarea id="commentInput" rows="3" placeholder="여기에 댓글 내용을 입력하세요..."></textarea>
+                <button onclick="addComment()" style="width: 100%; margin-top: 0.5rem;">+ 댓글 등록하기</button>
+            </div>
+
+            <ul id="commentList">
+                </ul>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; <span id="year"></span> DOM 실습 페이지. All rights reserved.</p>
+    </footer>
+
+    <script src="basic_script.js"></script>
+</body>
+</html>

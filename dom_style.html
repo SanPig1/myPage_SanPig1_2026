@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>실습 1: DOM 스타일 변환기</title>
+    <link rel="stylesheet" href="basic_style.css">
+    <style>
+        /* 페이지 전용 추가 스타일 */
+        #target {
+            font-size: 20px;
+            font-weight: bold;
+            padding: 30px;
+            border: 2px dashed #ccc;
+            margin: 2rem auto;
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+            border-radius: 8px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            box-sizing: border-box;
+            background-color: #fafafa;
+        }
+        
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+
+        /* 동적 제어 컨테이너 (슬라이더 및 커스텀 팔레트용) */
+        .control-panel {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: #f1f3f5;
+            border-radius: 6px;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            animation: fadeIn 0.2s ease;
+        }
+
+        .control-panel.active {
+            display: flex;
+        }
+
+        /* 수평 바(슬라이더) 스타일 */
+        .size-slider {
+            width: 200px;
+            cursor: pointer;
+        }
+
+        /* 커스텀 컬러 패널 내 요소 */
+        .color-container {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .color-input-custom {
+            padding: 0;
+            width: 40px;
+            height: 35px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .panel-btn {
+            padding: 0.4rem 0.8rem;
+            font-size: 0.9rem;
+            background-color: #495057;
+        }
+        .panel-btn:hover {
+            background-color: #343a40;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+    <script>
+        // 크게 보기 상태 관리를 위한 변수
+        var isSizeActive = false;
+
+        // 1. 글자색 변경 함수 (원상복구 제외, 언제나 패널 오픈)
+        function changeColor() {
+            var panel = document.getElementById("colorPanel");
+            
+            // 다른 열려있는 패널(슬라이더 등) 닫기
+            closeAllPanels();
+            
+            // 패널 활성화 및 타이틀 설정
+            panel.classList.add("active");
+            document.getElementById("panelTitle").textContent = "글자색 선택: ";
+            
+            // 확인 버튼 클릭 시 글자색 적용 후 패널 닫기
+            document.getElementById("colorConfirmBtn").onclick = function() {
+                var obj = document.getElementById("target");
+                var selectedColor = document.getElementById("customColorPicker").value;
+                obj.style.color = selectedColor;
+                panel.classList.remove("active");
+            };
+        }
+
+        // 2. 배경색 변경 함수 (원상복구 제외, 언제나 패널 오픈)
+        function changeBackground() {
+            var panel = document.getElementById("colorPanel");
+
+            // 다른 열려있는 패널(슬라이더 등) 닫기
+            closeAllPanels();
+            
+            // 패널 활성화 및 타이틀 설정
+            panel.classList.add("active");
+            document.getElementById("panelTitle").textContent = "배경색 선택: ";
+            
+            // 확인 버튼 클릭 시 배경색 적용 후 패널 닫기
+            document.getElementById("colorConfirmBtn").onclick = function() {
+                var obj = document.getElementById("target");
+                var selectedColor = document.getElementById("customColorPicker").value;
+                obj.style.backgroundColor = selectedColor;
+                panel.classList.remove("active");
+            };
+        }
+
+        // 3. 크게 보기 함수 (수평 바/슬라이더 조절 기능 - 기존 토글 유지)
+        function changeSize() {
+            var obj = document.getElementById("target");
+            var panel = document.getElementById("sliderPanel");
+            var slider = document.getElementById("fontSizeSlider");
+
+            if (isSizeActive) {
+                // 원상복구
+                obj.style.fontSize = "";
+                panel.classList.remove("active");
+                isSizeActive = false;
+            } else {
+                // 다른 열려있는 패널 닫기
+                closeAllPanels();
+                // 슬라이더 패널 켜기
+                panel.classList.add("active");
+                
+                // 초기값 세팅 (기본 20px)
+                slider.value = 20; 
+                obj.style.fontSize = "20px";
+                document.getElementById("sizeValue").textContent = "20px";
+
+                // 슬라이더 조절 시 실시간 글자 크기 변경 이벤트
+                slider.oninput = function() {
+                    obj.style.fontSize = this.value + "px";
+                    document.getElementById("sizeValue").textContent = this.value + "px";
+                };
+                isSizeActive = true;
+            }
+        }
+
+        // 4. 숨기기/보이기 토글 함수 (기존 토글 유지)
+        function toggleVisibility() {
+            var obj = document.getElementById("target");
+            if (obj.style.display === "none") {
+                obj.style.display = "block";
+            } else {
+                obj.style.display = "none";
+            }
+        }
+
+        // 보조 함수: 패널 전환 시 열려있는 다른 패널들을 닫기
+        function closeAllPanels() {
+            document.getElementById("colorPanel").classList.remove("active");
+            document.getElementById("sliderPanel").classList.remove("active");
+        }
+    </script>
+</head>
+<body>
+
+    <header>
+        <h1>DOM 제어 실습실</h1>
+        <div class="subtitle">JavaScript로 웹 페이지를 동적으로 제어하기</div>
+    </header>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="portfolio.html">Portfolio</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+
+    <div class="container">
+        <section>
+            <h2>실습 1: DOM 스타일 제어하기</h2>
+            <p>'글자색 변경'과 '배경 강조' 버튼 클릭시 색상 파레트가 출력됩니다.<br> '크게 보기'와 '숨기기' 버튼클릭시 원래 상태로 돌아갑니다.</p>
+            <hr style="border: 0; height: 1px; background: #eee; margin: 1rem 0;">
+            
+            <div id="target">이 문장의 스타일을 바꿔보세요!</div>
+
+            <div class="button-group">
+                <button onclick="changeColor()">글자색 변경</button>
+                <button onclick="changeSize()">글씨크기 변경</button>
+                <button onclick="changeBackground()">배경 강조</button>
+                <button onclick="toggleVisibility()">숨기기/보이기</button>
+            </div>
+
+            <div id="colorPanel" class="control-panel">
+                <div class="color-container">
+                    <strong id="panelTitle">색상 선택: </strong>
+                    <input type="color" id="customColorPicker" class="color-input-custom" value="#1e5bb8">
+                    <button id="colorConfirmBtn" class="panel-btn">확인</button>
+                </div>
+            </div>
+
+            <div id="sliderPanel" class="control-panel">
+                <strong>글자 크기 조절: </strong>
+                <input type="range" id="fontSizeSlider" class="size-slider" min="16" max="60" value="20">
+                <span id="sizeValue" style="font-weight: bold; min-width: 40px;">20px</span>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; <span id="year"></span> DOM 실습 페이지. All rights reserved.</p>
+    </footer>
+
+    <script src="basic_script.js"></script>
+</body>
+</html>

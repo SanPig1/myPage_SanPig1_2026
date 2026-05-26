@@ -21,3 +21,8 @@ https://sanpig1.github.io/myPage_SanPig1_2026/
 - dday.html, random.html 페이지 추가
 - 기존 basic templete의 css, js 추가
 - 실습페이지 연결을 위한 portfolio.html 페이지 수정
+
+## 5/26 수정 내용
+
+- dom_style.html, dom_list.html 페이지 추가
+- 실습 페이지 연결을 위한 portfolio.html 페이지 수정
