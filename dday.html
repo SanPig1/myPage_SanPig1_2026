@@ -5,21 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>D-Day 계산기 - 인터넷활용 실습</title>
   <link rel="stylesheet" href="basic_style.css">
-</head>
-<body>
-<header>
-  <h1>실습 1: D-Day 계산기</h1>
-  <p class="subtitle">입력받은 날짜를 목표 날짜로 설정하고, 오늘을 기준으로 남은 D-Day를 계산합니다.</p>
-</header>
-<nav>
-  <a href="index.html">Home</a>
-  <a href="about.html">About</a>
-  <a href="portfolio.html">Portfolio</a>
-  <a href="contact.html">Contact</a>
-</nav>
-<main class="container">
-<section>
   <style>
+    /* D-Day 계산기 전용 세련된 커스텀 스타일 */
     .dday-wrapper {
       max-width: 480px;
       margin: 2rem auto;
@@ -37,8 +24,55 @@
       font-size: 1.5rem;
       font-weight: 700;
       margin-top: 0;
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
       letter-spacing: -0.5px;
+    }
+
+    /* 날짜 선택 숫자메뉴 조작 영역 */
+    .input-group {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      background: #f1f5f9;
+      padding: 1rem;
+      border-radius: 14px;
+    }
+
+    .input-group select {
+      flex: 1;
+      padding: 0.6rem;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      background: #ffffff;
+      font-size: 1rem;
+      font-weight: 500;
+      color: #334155;
+      cursor: pointer;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .input-group select:focus {
+      border-color: var(--primary);
+    }
+
+    .input-group span {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #64748b;
+    }
+
+    /* 계산하기 버튼 전용 */
+    .btn-calc {
+      width: 100%;
+      padding: 0.75rem;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 10px;
+      margin-bottom: 1.5rem;
+      transition: background 0.2s;
     }
 
     .dday-card {
@@ -47,6 +81,7 @@
       border-radius: 18px;
       padding: 2rem 1.5rem;
       margin-bottom: 1.5rem;
+      display: none; /* 초기 상태에는 숨김 처리 */
     }
 
     .dday-title {
@@ -101,25 +136,13 @@
       border-top: 1px dashed #e2e8f0;
       padding-top: 1.5rem;
       margin-top: 0.5rem;
+      display: none; /* 초기 상태에는 숨김 처리 */
     }
 
     .dday-today-text {
       font-size: 0.875rem;
       color: #64748b;
-      margin: 0 0 6px 0;
-    }
-
-    .dday-refresh-text {
-      font-size: 0.75rem;
-      color: #94a3b8;
       margin: 0;
-    }
-
-    .dday-canceled {
-      padding: 3rem 1rem;
-      color: #94a3b8;
-      font-size: 1.1rem;
-      font-weight: 500;
     }
 
     @keyframes pulse {
@@ -127,64 +150,126 @@
       50% { transform: scale(1.03); }
     }
   </style>
+</head>
+<body>
+<header>
+  <h1>실습 1: D-Day 계산기</h1>
+  <p class="subtitle">직접 숫자를 선택하여 목표 날짜를 설정하고, 오늘 기준 D-Day를 편리하게 계산합니다.</p>
+</header>
+<nav>
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="portfolio.html">Portfolio</a>
+  <a href="contact.html">Contact</a>
+</nav>
 
+<main class="container">
+<section>
   <div class="dday-wrapper">
     <h2>Date 객체 활용: D-Day 계산기</h2>
     
-    <script>
-      // 1. 오늘 날짜 객체 생성
-      let now = new Date(); 
+    <div class="input-group">
+      <select id="select-year"></select><span>년</span>
+      <select id="select-month"></select><span>월</span>
+      <select id="select-day"></select><span>일</span>
+    </div>
 
-      // 2. prompt()로 사용자에게 연, 월, 일 입력받기
-      let year = prompt("목표 연도를 입력하세요 (예: 2025)", "2025");
-      let month = prompt("목표 월을 입력하세요 (1~12)", "12");
-      let day = prompt("목표 일을 입력하세요 (1~31)", "25");
+    <button class="btn-calc" onclick="calculateDday()">D-Day 계산하기</button>
 
-      // 사용자가 '취소'를 누르거나 값을 입력하지 않은 경우
-      if (!year || !month || !day) {
-        document.write("<div class='dday-canceled'><h3>❌ D-Day 계산을 취소했습니다.</h3><p style='font-size:0.85rem; margin-top:8px;'>새로고침(F5)을 하면 다시 입력할 수 있습니다.</p></div>");
-      } else {
-        // 3. 입력받은 값으로 목표 날짜 객체 생성
-        let targetDate = new Date(year, month - 1, day); 
-
-        // 4. 날짜 차이 계산 (밀리초 단위)
-        let diffMs = targetDate.getTime() - now.getTime();
-
-        // 5. 밀리초(ms)를 일(day) 단위로 변환
-        let diffDay = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
-
-        // HTML 출력을 깔끔하게 감싸서 구성
-        let resultHtml = "<div class='dday-card'>";
-        resultHtml += "  <p class='dday-title'>🎯 목표 날짜</p>";
-        resultHtml += "  <p class='dday-target'>" + targetDate.toLocaleString() + "</p>";
-
-        if (diffDay === 0) {
-          resultHtml += "  <div class='dday-counter color-zero'>D-Day 🎉</div>";
-          resultHtml += "  <p class='dday-info-text'><strong>오늘</strong>이 바로 목표하신 날입니다!</p>";
-        } else if (diffDay > 0) {
-          resultHtml += "  <div class='dday-counter color-future'>D-" + diffDay + "</div>";
-          resultHtml += "  <p class='dday-info-text'>목표일까지 <strong>" + diffDay + "일</strong> 남았습니다.</p>";
-        } else {
-          resultHtml += "  <div class='dday-counter color-past'>D+" + Math.abs(diffDay) + "</div>";
-          resultHtml += "  <p class='dday-info-text'>목표일로부터 <strong>" + Math.abs(diffDay) + "일</strong> 지났습니다.</p>";
-        }
-        resultHtml += "</div>";
-
-        resultHtml += "<div class='dday-footer'>";
-        resultHtml += "  <p class='dday-today-text'>📅 오늘 날짜: " + now.toLocaleString() + "</p>";
-        resultHtml += "  <p class='dday-refresh-text'><i>새로고침(F5)을 눌러 다시 계산할 수 있습니다.</i></p>";
-        resultHtml += "</div>";
-
-        // 6. 결과 출력
-        document.write(resultHtml);
-      }
-    </script>
+    <div id="result-card" class="dday-card"></div>
+    <div id="result-footer" class="dday-footer"></div>
   </div>
 </section>
 </main>
+
 <footer>
   <small>&copy; <span id="year"></span> 허연욱</small>
 </footer>
+
+<script>
+  // 페이지 로드 시 드롭다운(select) 옵션 메뉴를 자동으로 동적 생성
+  window.addEventListener('DOMContentLoaded', function() {
+    var now = new Date();
+    var currentYear = now.getFullYear();
+    
+    var yearSelect = document.getElementById('select-year');
+    var monthSelect = document.getElementById('select-month');
+    var daySelect = document.getElementById('select-day');
+
+    // 년도 생성 (현재 연도 기준 전후 10년 범위 제공)
+    for (var y = currentYear - 5; y <= currentYear + 10; y++) {
+      var opt = document.createElement('option');
+      opt.value = y;
+      opt.textContent = y;
+      if (y === currentYear) opt.selected = true; // 기본값: 올해
+      yearSelect.appendChild(opt);
+    }
+
+    // 월 생성 (1월 ~ 12월)
+    for (var m = 1; m <= 12; m++) {
+      var opt = document.createElement('option');
+      opt.value = m;
+      opt.textContent = m;
+      if (m === (now.getMonth() + 1)) opt.selected = true; // 기본값: 이번 달
+      monthSelect.appendChild(opt);
+    }
+
+    // 일 생성 (1일 ~ 31일)
+    for (var d = 1; d <= 31; d++) {
+      var opt = document.createElement('option');
+      opt.value = d;
+      opt.textContent = d;
+      if (d === now.getDate()) opt.selected = true; // 기본값: 오늘 일자
+      daySelect.appendChild(opt);
+    }
+  });
+
+  // 사용자가 직접 입력한 숫자를 제어하여 디데이를 계산하는 핵심 함수
+  function calculateDday() {
+    var now = new Date();
+    
+    // 사용자가 조작하여 선택한 숫자값 가져오기
+    var selYear = parseInt(document.getElementById('select-year').value);
+    var selMonth = parseInt(document.getElementById('select-month').value);
+    var selDay = parseInt(document.getElementById('select-day').value);
+
+    // 선택된 값으로 목표 날짜 객체 생성
+    var targetDate = new Date(selYear, selMonth - 1, selDay); 
+    
+    // 날짜 차이 계산 (밀리초 단위)
+    var diffMs = targetDate.getTime() - now.getTime();
+    // 밀리초(ms)를 일(day) 단위로 변환
+    var diffDay = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+
+    // 결과 템플릿 카드 바인딩
+    var resultCard = document.getElementById('result-card');
+    var resultFooter = document.getElementById('result-footer');
+
+    var cardHtml = "<p class='dday-title'>🎯 목표 날짜</p>";
+    cardHtml += "<p class='dday-target'>" + targetDate.toLocaleDateString() + "</p>";
+
+    if (diffDay === 0) {
+      cardHtml += "<div class='dday-counter color-zero'>D-Day 🎉</div>";
+      cardHtml += "<p class='dday-info-text'><strong>오늘</strong>이 바로 목표하신 날입니다!</p>";
+    } else if (diffDay > 0) {
+      cardHtml += "<div class='dday-counter color-future'>D-" + diffDay + "</div>";
+      cardHtml += "<p class='dday-info-text'>목표일까지 <strong>" + diffDay + "일</strong> 남았습니다.</p>";
+    } else {
+      cardHtml += "<div class='dday-counter color-past'>D+" + Math.abs(diffDay) + "</div>";
+      cardHtml += "<p class='dday-info-text'>목표일로부터 <strong>" + Math.abs(diffDay) + "일</strong> 지났습니다.</p>";
+    }
+
+    var footerHtml = "<p class='dday-today-text'>📅 기준 날짜(오늘): " + now.toLocaleString() + "</p>";
+
+    // 화면에 결과를 부드럽게 표출
+    resultCard.innerHTML = cardHtml;
+    resultFooter.innerHTML = footerHtml;
+    
+    resultCard.style.display = "block";
+    resultFooter.style.display = "block";
+  }
+</script>
+
 <script src="basic_script.js"></script>
 </body>
 </html>

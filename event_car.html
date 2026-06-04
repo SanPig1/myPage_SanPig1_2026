@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>실습 2: 키보드 자동차</title>
+    <link rel="stylesheet" href="basic_style.css">
+    <style>
+        /* 키보드 자동차 전용 스타일 */
+        .game-space {
+            position: relative;
+            width: 100%;
+            height: 500px; /* 이미지 비율에 맞춰 높이를 조금 늘렸습니다 */
+            
+            /* [배경 이미지 설정] 업로드하신 Background.png를 배경으로 지정 */
+            background-image: url('Background.png'); 
+            background-size: cover;       /* 영역에 이미지가 꽉 차도록 설정 */
+            background-position: center;  /* 이미지의 중심이 오도록 설정 */
+            background-repeat: no-repeat; /* 이미지 반복 방지 */
+            
+            border: 2px dashed #94a3b8;
+            border-radius: 8px;
+            overflow: hidden; /* 영역 밖으로 나가는 시각적 요소 차단 */
+            margin-top: 1rem;
+        }
+
+        #car {
+            position: absolute;
+            left: 100px;
+            top: 100px;
+            width: 60px;
+            height: 60px;
+            font-size: 40px; /* 이모지 크기 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: left 0.05s linear, top 0.05s linear; /* 부드러운 이동 효과 */
+            z-index: 10;
+        }
+        
+        .status-info {
+            margin-top: 1rem;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            font-weight: 600;
+            color: var(--primary-dark);
+            display: inline-block;
+        }
+
+        .guide-box {
+            background: #eff6ff;
+            border-left: 4px solid var(--primary);
+            padding: 0.75rem 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0 6px 6px 0;
+        }
+    </style>
+    <script>
+        var x = 100;
+        var y = 100;
+        var step = 15; // 이동 거리
+        var currentScaleX = 1; // 자동차의 현재 좌우 방향 상태 저장 (1: 기본 정면, -1: 반전)
+
+        window.onload = function() {
+            var car = document.getElementById("car");
+            var info = document.getElementById("info");
+            var space = document.querySelector(".game-space");
+
+            document.onkeydown = function(e) {
+                // 방향키가 눌렸을 때만 실행되도록 체크
+                if([37, 38, 39, 40].indexOf(e.keyCode) === -1) return;
+                
+                // 브라우저 기본 스크롤 현상 방지
+                e.preventDefault();
+
+                // 이동 가능한 최대 범위 계산 (트랙 크기 - 자동차 크기)
+                var maxX = space.clientWidth - car.clientWidth;
+                var maxY = space.clientHeight - car.clientHeight;
+
+                // 37:왼쪽, 38:위, 39:오른쪽, 40:아래
+                switch(e.keyCode) {
+                    case 37: // [왼쪽]
+                        x -= step;
+                        currentScaleX = 1;  // 기본 정면(왼쪽 모양) 유지
+                        break;
+                    case 38: // [위쪽]
+                        y -= step;
+                        break;
+                    case 39: // [오른쪽]
+                        x += step;
+                        currentScaleX = -1; // 이미지를 반전시켜 오른쪽을 바라보게 함
+                        break;
+                    case 40: // [아래쪽]
+                        y += step;
+                        break;
+                }
+
+                // [영역 제한 로직] 벽 밖으로 나가지 못하게 경계값 고정
+                if (x < 0) x = 0;
+                if (x > maxX) x = maxX;
+                if (y < 0) y = 0;
+                if (y > maxY) y = maxY;
+
+                // 변경된 좌표 적용
+                car.style.left = x + "px";
+                car.style.top = y + "px";
+                
+                // 바라보는 방향(ScaleX) 변화 적용
+                car.style.transform = "scaleX(" + currentScaleX + ")";
+
+                // 좌표 정보 출력
+                info.innerHTML = "📍 현재 위치 (X, Y) = (" + x + "px, " + y + "px)";
+            }
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <h1>🚗 키보드 미니 자동차</h1>
+        <div class="subtitle">자바스크립트 이벤트를 이용한 키보드 조작 실습</div>
+    </header>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="portfolio.html">Portfolio</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+
+    <main class="container">
+        <section>
+            <h2>대시보드</h2>
+            <div class="guide-box">
+                💡 <strong>운전 방법:</strong> 키보드의 방향키(←, ↑, →, ↓)를 눌러 화면 속 자동차를 움직여 보세요! (벽에 부딪히면 멈춥니다.)
+            </div>
+            
+            <div class="game-space">
+                <div id="car">🚗</div>
+            </div>
+
+            <div id="info" class="status-info">📍 현재 위치 (X, Y) = (100px, 100px)</div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; <span id="year"></span> Drive Simulator. All rights reserved.</p>
+    </footer>
+
+    <script src="basic_script.js"></script>
+</body>
+</html>
